@@ -156,6 +156,8 @@
     NSURLConnection *aConnection = [[NSURLConnection alloc] initWithRequest:serviceRequest delegate:self];
     [self._activeConnections setObject:connectionInfo forKey:[NSNumber numberWithInt:(int)aConnection]];
     
+    CFRunLoopRun(); // Avoid thread exiting
+    
     return aId;
 }
 
@@ -226,6 +228,7 @@
     
     [self._activeConnections removeObjectForKey:connectionKey];
     DS_RELEASE(connection)
+    CFRunLoopStop(CFRunLoopGetCurrent());
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -282,6 +285,7 @@
     // Remove the connection from active connections
     [self._activeConnections removeObjectForKey:connectionKey];
     DS_RELEASE(connection)
+    CFRunLoopStop(CFRunLoopGetCurrent());
 }
 
 @end
