@@ -130,7 +130,7 @@
     }
     
     // Create the JSON-RPC request
-    NSMutableURLRequest *serviceRequest = [NSMutableURLRequest requestWithURL:self._serviceEndpoint];
+    NSMutableURLRequest *serviceRequest = [NSMutableURLRequest requestWithURL:self._serviceEndpoint cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60 * 10];
     [serviceRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [serviceRequest setValue:@"DSJSONRPC/1.0" forHTTPHeaderField:@"User-Agent"];
     
